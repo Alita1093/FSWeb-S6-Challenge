@@ -14,8 +14,8 @@ const Akıs = (props) => {
       eye_color={karakterInfo.eye_color}
       birth_year={karakterInfo.birth_year}
       gender={karakterInfo.gender}
-      homeworld={karakterInfo.homeworld}
-      starships={karakterInfo.starships}
+      // homeworld={karakterInfo.homeworld}
+      // starships={karakterInfo.starships}
     />
   );
 };

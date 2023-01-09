@@ -21,8 +21,6 @@ const ChInfo = (props) => {
     eye_color,
     birth_year,
     gender,
-    homeworld,
-    starships,
   } = props;
   return (
     <SCInfoCont>
@@ -36,8 +34,6 @@ const ChInfo = (props) => {
         <li>Göz Rengi:{eye_color}</li>
         <li>Doğum Yılı:{birth_year}</li>
         <li>Cinsiyet:{gender}</li>
-        <li>Memleket:{homeworld}</li>
-        <li>Araçlar:{starships}</li>
       </ul>
     </SCInfoCont>
   );

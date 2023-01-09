@@ -21,24 +21,24 @@ const SCcont = styled.div`
 `;
 
 const App = () => {
-  // Try to think through what state you'll need for this app before starting. Then build out
+  // Try to think through what state you’ll need for this app before starting. Then build out
   // the state properties here.
-
   // Fetch characters from the API in an effect hook. Remember, anytime you have a
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
-  const [veri, setVeri] = useState([]);
+  const [veri, setVeri] = useState(null);
   const [sayi, setSayi] = useState(4);
-  const [mem, setMem] = useState([]);
-  const [gem, setGem] = useState([]);
+  const [mem, setMem] = useState(null);
+  const [gem, setGem] = useState(null);
   const [deger, setDeger] = useState(0);
-  const [adet, setAdet] = useState(0);
-
   function Arttir() {
     setSayi(sayi + 1);
   }
   function Azalt() {
     setSayi(sayi - 1);
+  }
+  function Reset() {
+    setSayi(1);
   }
   useEffect(() => {
     axios
@@ -48,21 +48,19 @@ const App = () => {
       })
       .catch((error) => console.log(error));
   }, [sayi]);
-
-  console.log(veri.starships);
-
+  console.log(veri);
   useEffect(() => {
-    if (veri.length > 0) {
+    if (veri && veri.homeworld) {
       axios
-        .get(veri.homeworld[adet])
+        .get(veri.homeworld)
         .then((response) => {
           setMem(response.data);
         })
         .catch((error) => console.log(error));
     }
-  }, [adet, veri]);
+  }, [veri, sayi]);
   useEffect(() => {
-    if (veri.length > 0) {
+    if (veri && veri.starships.length > 0) {
       axios
         .get(veri.starships[deger])
         .then((response) => {
@@ -70,18 +68,19 @@ const App = () => {
         })
         .catch((error) => console.log(error));
     }
-  }, [deger, veri]);
-
+  }, [deger, veri, sayi]);
   return (
     <SCapp>
-      <SCheader>Karakterler</SCheader>
+      <button onClick={Arttir}>Arttır</button>
+      <button onClick={Azalt}>Azalt</button>
+      <button onClick={Reset}>Reset</button>
+      <SCheader>{veri.name}</SCheader>
       <SCcont>
-        <Akıs karakterInfo={veri} />
-        <MemleketAkıs memleketInfo={mem} />
-        <GemiAkıs gemiInfo={gem} />
+        {veri && <Akıs karakterInfo={veri} />}
+        {mem && <MemleketAkıs memleketInfo={mem} />}
+        {gem && <GemiAkıs gemiInfo={gem} />}
       </SCcont>
     </SCapp>
   );
 };
-
 export default App;
